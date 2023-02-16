@@ -14,3 +14,27 @@ FROM part
 GROUP BY class
 HAVING AVG(Unit_price) < 300
 
+# List the Customer and their Sales Rep
+SELECT customername, lastname, firstname
+FROM customer
+JOIN rep ON customer.repnum = rep.repnum
+
+# List the Customer Name and the part description of items they have ordered
+SELECT customername, description
+FROM customer
+JOIN orders ON customer.customernum = orders.customernum
+JOIN orderline ON order.ordernum = orderline.ordernum
+JOIN part ON orderline.partnum = part.partnum
+
+# List the Customer Name and their total quoted price per order
+SELECT customername, orders.ordernum, sum(quotedprice * unit_price) AS Total_Ordered
+FROM customer JOIN orders ON
+customer.customernum = orders.customernum
+JOIN orderline ON orders.ordernum = orderline.ordernum
+
+# List the sum of the balance of all customers for each sales rep, but restrict the output to those sales for whom the sum if more than $ 15,000
+SELECT lastname, firstname, sum(balance) as Amount_Owned
+FROM rep
+JOIN customer ON rep.repnum = customer.repnum
+GROUP BY firstname, lastname
+HAVING sum(balance) > 15000
