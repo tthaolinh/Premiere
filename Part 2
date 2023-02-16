@@ -1,0 +1,16 @@
+# List all details about part. Order the output by part number within item class
+SELECT *
+FROM part
+ORDER BY class, partnum
+
+# List the warehouse and the average unit price for each warehouse
+SELECT warehouse, AVG(unit_price)
+FROM part
+GROUP BY warehouse
+
+# List the item Class and the average Unit_Price for each Item Class. Please include only those item classes that have an average unit price less than $300
+SELECT class, AVG(Unit_price) 
+FROM part
+GROUP BY class
+HAVING AVG(Unit_price) < 300
+
