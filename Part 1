@@ -1,1 +1,29 @@
+# List the part number and part description for all parts
+SELECT partnum, description
+FROM part
 
+# List the part number of any part with an unkown description
+SELECT partnum
+FROM part
+WHERE description IS NULL
+
+# What is the price of the least expensive part
+SELECT MIN(unit_price) FROM part
+
+# List the part number, part description, and on-hand value (units_on_hand * price) of each part. Assign the name ON_HAND_VALUE to the computation
+SELECT partnum, description, onhand*unit_price AS On_Hand_Value
+FROM part
+
+# List the part number, part description, and on-hand value for each part whose value is at least $7500. Assign the name ON_HAND_VALUE to the computation
+SELECT partnum, description, onhand*unit_price AS On_Hand_Value
+FROM part
+WHERE onhand*unit_price >= 7500
+
+# Use the IN operator to list the part number and part description of each part in item class HW or SG. Also, try it using the OR operator.
+SELECT partnum, description
+FROM part
+WHERE class = 'SG' or class = 'HW';
+
+SELECT partnum, description
+FROM part
+WHERE class IN ('HW', 'SG');
