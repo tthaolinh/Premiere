@@ -1,0 +1,26 @@
+# List the Customer Names that have an order. Try it with IN and EXISTS, and a JOIN
+SELECT customername
+FROM customer
+WHERE customernum IN (SELECT customernum FROM orders)
+
+SELECT customername 
+FROM customer
+WEHRE EXISTS (SELECT * FROM orders WHERE customer.customernum = orders.customernum)
+
+SELECT DISTINCT customername
+FROM customer
+JOIN orders ON customer.customernum = orders.customernum
+
+# List the Customer Names that do not have an order. Try it with IN and EXISTS
+SELECT customername
+FROM customer
+WHERE customernum NOT IN (SELECT customernum FROM orders)
+
+SELECT customername
+FROM customer
+WHERE NOT EXISTS (SELECT * FROM orders WHERE customer.customernum = orders.customernum)
+
+# List the part descriptions and the number on hand of parts that have the same number on hand
+select p1.partnum,p1.description, p2.partnum, p2.description, p1.onhand
+from part p1 join part p2 on p1.onhand = p2.onhand
+where p1.partnum <> p2.partnum
