@@ -1,0 +1,18 @@
+# List the part description, unit price, order quantity, and quoted price
+SELECT description, unit_price, numordered, quotedprice
+FROM part JOIN orderline ON part.partnum = orderline.partnum
+
+# List the part description, unit price, and if they have been ordered, the order quantity, and quoted price
+SELECT description, unit_price, numordered, quotedprice
+FROM part LEFT JOIN orderline ON
+part.partnum = orderline.partnum
+
+# List the last name and street of the sales rep and the customer name and street of the customer
+SELECT lastname, street
+FROM rep
+UNION
+SELECT customername, street
+FROM customer
+
+# List the description, unit_price, and when warehouse #1, the output will be Des Moines, if #2, then Philadelphia, else the words Houston. Label the header as Warehouse_Location
+SELECT description, unit_price, 
