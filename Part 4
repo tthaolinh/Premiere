@@ -15,14 +15,39 @@ SELECT customername, street
 FROM customer
 
 # List the description, unit_price, and when warehouse #1, the output will be Des Moines, if #2, then Philadelphia, else the words Houston. Label the header as Warehouse_Location
-SELECT description, unit_price, 
+SELECT description, unit_price, case warehouse
+when 1 then 'Des Moines' when 2 then 'Philadelphia'
+else 'Houston' end as Warehouse_Location
+FROM part
 
 # List the customer and if the balance is greater than 5,000 then output High Balance, otherwise output Low Balance. Label the header as Balance_Status
+SELECT customername, balance, if (balance > 5000, 'High Balance', 'Low Balance') as Balance_Status
+FROM customer
 
 # List the customer name, and if they placed an order, the orderdate
+SELECT customername, orderdate
+FROM customer LEFT JOINS orders ON
+customer.customernum = orders.customernum
 
 # List the customer, creditlimit, and balance that have a higher than average balance and a lower than average credit limit 
+SELECT customername, creditlimit, balance
+FROM customer
+WHERE balance > (SELECT AVG(balance) FROM customer)
+and creditlimit < (SELECT AVG(creditlimit) FROM customer)
 
 # List the customer and creditlimit that has the highest of the below average credit limit
+SELECT customername, creditlimit
+FROM customer
+WHERE creditlimit = (SELECT max(creditlimit) FROM customer
+WHERE creditlimit < (SELECT AVG(creditlimit) FROM customer))
 
 # Limit the name of the customer that placed the most expensive order and the amount of the order
+CREATE VIEW totalorder (ordernum, totalordered)
+AS select ordernum, sum (numordered*quotedprice)
+FROM orderline
+GROUP BY ordernum
+
+SELECT customername, totalordered
+FROM customer JOIN orders on customer.customernum = 
+orders.customernum JOIN totalorder ON orders.ordernum = totalorder.ordernum
+WHERE totalordered = (SELECT max(totalordered) FROM totalorder)
