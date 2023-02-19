@@ -16,3 +16,13 @@ FROM customer
 
 # List the description, unit_price, and when warehouse #1, the output will be Des Moines, if #2, then Philadelphia, else the words Houston. Label the header as Warehouse_Location
 SELECT description, unit_price, 
+
+# List the customer and if the balance is greater than 5,000 then output High Balance, otherwise output Low Balance. Label the header as Balance_Status
+
+# List the customer name, and if they placed an order, the orderdate
+
+# List the customer, creditlimit, and balance that have a higher than average balance and a lower than average credit limit 
+
+# List the customer and creditlimit that has the highest of the below average credit limit
+
+# Limit the name of the customer that placed the most expensive order and the amount of the order
